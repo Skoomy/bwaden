@@ -20,3 +20,15 @@ docker-compose up
 ```sh
 docker-compose down
 ```
+
+
+## Pre-requisites
+
+### Setting Up Pre-Commit Hooks
+
+Pre-commit hooks are used to enforce code quality and consistency before each commit. Follow these steps to set it up:
+
+1. **Install pre-commit**:
+   ```bash
+   pip install pre-commit
+   ```
