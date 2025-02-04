@@ -32,3 +32,19 @@ Pre-commit hooks are used to enforce code quality and consistency before each co
    ```bash
    pip install pre-commit
    ```
+
+2. Install the hook
+
+```sh
+pre-commit install
+```
+
+3. Run precommit on each file
+
+```sh
+pre-commit run --all-files
+```
+
+## Teckstack
+
+- Django

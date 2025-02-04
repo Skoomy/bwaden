@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  stock_analysis:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.dev
+    container_name: stock_analysis_tool
+    volumes:
+      - .:/app  # Mount the current directory to /app in the container
+    environment:
+      - PYTHONUNBUFFERED=1
+    command: python -m src --pipeline=data_collection
