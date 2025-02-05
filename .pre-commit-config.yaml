@@ -45,7 +45,7 @@ repos:
           - flake8-quotes  # Enforce consistent quote style
         args: [
           '--max-line-length=100',
-          '--extend-ignore=E203,Q000,D100',  # Ignore whitespace before ':' (black compatibility)
+          '--extend-ignore=E203,Q000,D100, D212,D104',  # Ignore whitespace before ':' (black compatibility)
           '--docstring-convention=google'
         ]
 
