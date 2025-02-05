@@ -16,3 +16,4 @@
 
 # python -m src.cli fetch AAPL --days 45
 python -m src.cli fetch PLTR --days 45
+python -m src.cli fetch BLK --days 45
