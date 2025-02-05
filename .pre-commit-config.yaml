@@ -1,32 +1,87 @@
 repos:
+  # Pre-commit-hooks (Essential checks)
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0  # Use the latest stable version
+    rev: v4.5.0  # Updated to latest version
     hooks:
-      - id: trailing-whitespace  # Remove trailing whitespace
-      - id: end-of-file-fixer    # Ensure files end with a newline
-      - id: check-yaml           # Validate YAML files
-      - id: check-added-large-files  # Prevent large files from being committed
-      - id: check-ast            # Check Python files for syntax errors
-      - id: debug-statements     # Check for debug statements (e.g., pdb, ipdb)
-      - id: check-merge-conflict # Check for merge conflict markers
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-toml
+      - id: check-added-large-files
+        args: ['--maxkb=1024']  # Set max file size to 1MB
+      - id: check-ast
+      - id: debug-statements
+      - id: check-merge-conflict
+      - id: detect-private-key  # Prevent accidental commit of private keys
+      - id: check-case-conflict  # Check for files with names that would conflict on case-insensitive filesystems
+      - id: mixed-line-ending
+        args: ['--fix=lf']  # Enforce Linux-style line endings
 
+  # Code formatting
   - repo: https://github.com/psf/black
-    rev: 23.9.1  # Use the latest stable version
+    rev: 24.3.0  # Updated to latest version
     hooks:
-      - id: black  # Auto-format Python code
+      - id: black
+        args: ['--line-length=100']
+        language_version: python3
 
+  # Import sorting
   - repo: https://github.com/PyCQA/isort
-    rev: 5.12.0  # Use the latest stable version
+    rev: 5.13.2  # Updated to latest version
     hooks:
-      - id: isort  # Sort Python imports
+      - id: isort
+        args: ['--profile=black', '--line-length=100']  # Make isort compatible with black
 
+  # Linting
   - repo: https://github.com/PyCQA/flake8
-    rev: 6.1.0  # Use the latest stable version
+    rev: 7.0.0  # Updated to latest version
     hooks:
-      - id: flake8  # Lint Python code
+      - id: flake8
+        additional_dependencies:
+          - flake8-bugbear  # Find likely bugs
+          - flake8-comprehensions  # Better list/set/dict comprehensions
+          - flake8-docstrings  # Check docstrings
+          - flake8-quotes  # Enforce consistent quote style
+        args: [
+          '--max-line-length=100',
+          '--extend-ignore=E203,Q000,D100',  # Ignore whitespace before ':' (black compatibility)
+          '--docstring-convention=google'
+        ]
 
+  # Type checking
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.6.1  # Use the latest stable version
+    rev: v1.8.0  # Updated to latest version
     hooks:
-      - id: mypy  # Static type checking for Python
-        additional_dependencies: [types-python-dateutil, types-requests]
+      - id: mypy
+        additional_dependencies:
+          - types-python-dateutil
+          - types-requests
+          - types-PyYAML
+          - types-setuptools
+        args: [
+          '--ignore-missing-imports',
+          '--disallow-untyped-defs',
+          '--check-untyped-defs',
+          '--warn-redundant-casts'
+        ]
+
+  # # Security checks
+  # - repo: https://github.com/PyCQA/bandit
+  #   rev: 1.7.7
+  #   hooks:
+  #     - id: bandit
+  #       args: ['-ll', '-i']  # Set to low level and include more info
+
+  # # Check for dependency vulnerabilities
+  # - repo: https://github.com/Lucas-C/pre-commit-hooks-safety
+  #   rev: v1.3.3
+  #   hooks:
+  #     - id: python-safety-dependencies-check
+
+  # Check docstring coverage
+  - repo: https://github.com/econchick/interrogate
+    rev: 1.5.0
+    hooks:
+      - id: interrogate
+        args: ['-v', '-i', '--fail-under=1']  # Require 80% docstring coverage

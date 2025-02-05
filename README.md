@@ -1,6 +1,9 @@
 # BWADEN 🚀
 
 
+```sh
+docker compose exec backend bash
+```
 
 ## Running the Project with Docker
 
