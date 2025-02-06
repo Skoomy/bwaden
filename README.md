@@ -1,9 +1,7 @@
 # BWADEN 🚀
 
 
-```sh
-docker compose exec backend bash
-```
+
 
 ## Running the Project with Docker
 
@@ -22,6 +20,12 @@ docker-compose up
 
 ```sh
 docker-compose down
+```
+
+4. **Run in the docker**
+
+```sh
+docker compose exec stock_analysis bash
 ```
 
 
