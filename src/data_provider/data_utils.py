@@ -1,7 +1,7 @@
 import logging
 
-from src.data_provider import YahooFinanceProvider
 from src.data_provider.data_manager import DataManager
+from src.data_provider.yahoo_provider import YahooFinanceProvider
 
 logger = logging.getLogger(__name__)
 

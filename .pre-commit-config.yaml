@@ -24,12 +24,12 @@ repos:
       - id: ruff
       - id: ruff-format
   # Code formatting
-  - repo: https://github.com/psf/black
-    rev: 24.3.0  # Updated to latest version
-    hooks:
-      - id: black
-        args: ['--line-length=100']
-        language_version: python3
+  # - repo: https://github.com/psf/black
+  #   rev: 24.3.0  # Updated to latest version
+  #   hooks:
+  #     - id: black
+  #       args: ['--line-length=100']
+  #       language_version: python3
 
   # Import sorting
   - repo: https://github.com/PyCQA/isort

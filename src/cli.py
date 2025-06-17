@@ -7,6 +7,7 @@ import click
 
 from src.cli_tool.display import display_company_info, display_stock_data
 from src.data_provider.data_utils import setup_data_manager
+from src.undervalued_stock.main import UndervaluedStocks
 
 # from rich.console import Console
 
@@ -20,14 +21,27 @@ def cli() -> None:
     pass
 
 
-@click.command()
-@click.option("--pipeline", default="data_collection", help="")
+@cli.command()
+# @click.argument("symbol")
+@click.option("--pipeline", default="data_collection")
 @click.option("--symbols", default="AAPL", help="Comma-separated list of stock symbols")
 @click.option("--days", default=30, help="Number of days of historical data to fetch")
 def runner(symbols: str, days: int, pipeline: str = "data_collection") -> None:
     """Run the specified pipeline."""
     click.clear()
     click.secho(f"Running pipeline: {pipeline}", fg="green")
+    tickers = [
+        "CYD",
+        "CUMMINS",
+        "WEICHAI.PK",
+        "PCAR",
+        "F",
+        "GM",
+        "HMC",
+        "TM",
+    ]  # Example tickers
+
+    UndervaluedStocks(tickers=tickers).run_screener()
 
     # if pipeline == 'data_collection':
     #     try:
@@ -50,7 +64,9 @@ def runner(symbols: str, days: int, pipeline: str = "data_collection") -> None:
 
 
 @cli.command()
-@click.argument("symbol", help="Stock symbol to fetch data for")
+@click.argument(
+    "symbol",
+)
 @click.option(
     "--end_date",
     help="End date for historical data (format: YYYY-MM-DD)",
@@ -79,14 +95,18 @@ def fetch(
         if isinstance(start_date, str):
             start_date = datetime.strptime(start_date, "%Y-%m-%d")
         elif not isinstance(start_date, datetime):
-            raise ValueError("start_date must be either a string (YYYY-MM-DD) or datetime object")
+            raise ValueError(
+                "start_date must be either a string (YYYY-MM-DD) or datetime object"
+            )
 
     # Convert end_date if it's a string
     if end_date is not None:
         if isinstance(end_date, str):
             end_date = datetime.strptime(end_date, "%Y-%m-%d")
         elif not isinstance(end_date, datetime):
-            raise ValueError("end_date must be either a string (YYYY-MM-DD) or datetime object")
+            raise ValueError(
+                "end_date must be either a string (YYYY-MM-DD) or datetime object"
+            )
 
     # If days is provided, override start_date and end_date
     if days:

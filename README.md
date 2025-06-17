@@ -16,7 +16,7 @@
 ```bash
 docker-compose up
 ```
-3. **Stop container
+3. **Stop container**
 
 ```sh
 docker-compose down
@@ -25,7 +25,7 @@ docker-compose down
 4. **Run in the docker**
 
 ```sh
-docker compose exec stock_analysis bash
+docker-compose exec stock_analysis bash
 ```
 
 
